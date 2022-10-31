@@ -1,0 +1,48 @@
+{
+    "ModelParams": {
+        "type": "RandomForest",
+        "metrics": [
+            "f1"
+        ],
+        "params_tunning": false,
+        "params": {
+            "max_depth": 10,
+            "max_features": "sqrt",
+            "min_samples_leaf": 1,
+            "min_samples_split": 5,
+            "n_estimators": 100
+        },
+        "params_grid": null,
+        "random_state": 42
+    },
+    "ProjectStructure": {
+        "dataset_path": "./data/raw/heart_cleveland_upload.csv",
+        "data_raw_path": "./data/raw",
+        "data_proc_path": "./data/processed",
+        "models_path": "./models"
+    },
+    "FeatureParams": {
+        "test_size": 0.2,
+        "target_col": "condition",
+        "categorical_cols": [
+            "sex",
+            "cp",
+            "fbs",
+            "restecg",
+            "exang",
+            "slope",
+            "ca",
+            "thal"
+        ],
+        "numerical_cols": [
+            "age",
+            "trestbps",
+            "chol",
+            "thalach",
+            "oldpeak"
+        ],
+        "cols_to_imput": [],
+        "cols_to_ohe": [],
+        "cols_to_scale": []
+    }
+}

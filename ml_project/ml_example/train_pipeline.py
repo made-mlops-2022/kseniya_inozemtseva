@@ -21,7 +21,7 @@ from ml_example.models import (
     predict_model,
     evaluate_model,
 )
-import mlflow
+#import mlflow
 
 from ml_example.models.model_fit_predict import create_inference_pipeline
 

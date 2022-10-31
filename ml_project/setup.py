@@ -13,7 +13,7 @@ setup(
     author="Your name (or your organization/company/team)",
     entry_points={
         "console_scripts": [
-            "ml_example_train = ml_example.train_pipeline:train_pipeline_command"
+            "ml_example_train = ml_example.main:launch_train"
         ]
     },
     install_requires=required,
