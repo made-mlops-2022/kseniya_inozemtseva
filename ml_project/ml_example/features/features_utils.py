@@ -10,9 +10,9 @@ class CustomTransformerCLevHeartDisease(TransformerMixin):
     def transform(self, X, y):
         X_ = X.copy()
 
-        X_['thal_oldpeak2'] = X_['thal'].astype('str') + "_" + (X_['oldpeak'] // 0.4).astype('str')
-        X_['thal_trestbps2'] = X_['thal'].astype('str') + "_" + (X_['trestbps2'] // 10).astype('str')
-        X_['sex_oldpeak2'] = X_['sex'].astype('str') + "_" + (X_['oldpeak'] // 0.4).astype('str')
+        X_['thal_oldpeak2'] = X_['thal'].astype('str') + "_" + (X_['oldpeak'] // 0.4).astype('int').astype('str')
+        X_['thal_trestbps2'] = X_['thal'].astype('str') + "_" + (X_['trestbps'] // 10).astype('str')
+        X_['sex_oldpeak2'] = X_['sex'].astype('str') + "_" + (X_['oldpeak'] // 0.4).astype('int').astype('str')
         return X_
 
 

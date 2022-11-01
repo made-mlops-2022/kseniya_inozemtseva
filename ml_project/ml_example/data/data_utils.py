@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 
-from ml_example.params import ProjectStructure
+from ml_example.params.params_utils import ProjectStructure
 
 
 def download_dataset(
@@ -33,10 +33,6 @@ def download_dataset(
 def read_dataset(dataset_path='') -> pd.DataFrame:
     if dataset_path:
         return pd.read_csv(os.path.abspath(dataset_path))
-
-
-def process_data(df : pd.DataFrame) -> None:
-    pass
 
 
 def split_train_val_data(data : pd.DataFrame, feature_params) -> Any:

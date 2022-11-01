@@ -10,8 +10,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ~~~
 Usage:
+Запуск обучения модели командой ml_train после которой надо указать файл конфигурации для запуска. Можно указать флаг --stream для вывода лога в консоль, и флаг --debug для более подробного логгирования (более подробное пишется только в файл с логом).
+
+Запуск обучения - командой ml_predict после которой надо указать csv файл с тестовым датасетом и файл в котором сохранена обученная модель (сообщение в логе из предыдущей команды). Дополнительно можно указать путь до файла, куда сохранять предсказания и те же опции логгирования, что и для предыдущей команды. 
 ~~~
-python ml_example/train_pipeline.py configs/train_config.yaml
+ml_train "./configs/cle_hea_diss_simple.json" --stream --debug
+ml_predict "..\test.csv" ".\models\RandomForest.pkl" --output_path "..\output.csv" --stream
+ml_predict "..\test.csv" ".\models\RandomForest.pkl" --stream
 ~~~
 
 Test:

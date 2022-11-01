@@ -91,3 +91,12 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+/data
+/models
+../
+ml_example.egg-info
+../ml_env/
+
+*.txt
+*.csv

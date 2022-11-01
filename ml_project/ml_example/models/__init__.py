@@ -1,13 +1,13 @@
-from .model_fit_predict import (
-    train_model,
-    serialize_model,
-    predict_model,
-    evaluate_model,
+from .models_utils import (
+    get_model,
+    restore_model,
+    score,
+    save_state
 )
 
 __all__ = [
-    "train_model",
-    "serialize_model",
-    "evaluate_model",
-    "predict_model",
+    "get_model",
+    "restore_model",
+    "save_state",
+    "score",
 ]
