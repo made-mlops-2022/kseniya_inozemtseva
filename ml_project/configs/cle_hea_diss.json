@@ -65,8 +65,25 @@
             "thalach",
             "oldpeak"
         ],
-        "cols_to_imput": [],
+        "cols_to_imput": {
+            "num": [],
+            "cat": []
+        },
         "cols_to_ohe": [],
-        "cols_to_scale": []
+        "scale_params": [
+            [
+                "oldpeak",
+                "trestbps"
+            ],
+            [
+                0.4,
+                10
+            ]
+        ],
+        "cols_to_std_scale": [
+            "age"
+        ],
+        "cat_impute_strat": "most_frequent",
+        "num_impute_strat": "constant"
     }
 }

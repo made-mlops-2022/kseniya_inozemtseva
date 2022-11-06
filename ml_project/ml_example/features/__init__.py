@@ -1,3 +1,3 @@
-from .features_utils import get_processor
+from .features_utils import get_preprocessor
 
-__all__ = ["get_processor"]
+__all__ = ["get_preprocessor"]

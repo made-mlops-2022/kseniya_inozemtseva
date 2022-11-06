@@ -66,9 +66,12 @@ class FeatureParams:
     target_col: str = 'condition'
     categorical_cols: List[str] = field(default_factory=lambda: ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'])
     numerical_cols: List[str] = field(default_factory=lambda: ['age', 'trestbps', 'chol', 'thalach', 'oldpeak'])
-    cols_to_imput: List[str] = field(default_factory=lambda: [])
+    cols_to_imput: List[str] = field(default_factory=lambda: {'num': [], 'cat' : []})
     cols_to_ohe: List[str] = field(default_factory=lambda: [])
-    cols_to_scale: List[str] = field(default_factory=lambda: [])
+    scale_params: List[str] = field(default_factory=lambda: (['oldpeak','trestbps'], [0.4, 10]))
+    cols_to_std_scale: List[str] = field(default_factory=lambda: ['age'])
+    cat_impute_strat: str = 'most_frequent'
+    num_impute_strat: str = 'constant'
 
 
 class_names = {ModelParams.__name__: ModelParams,
@@ -100,12 +103,15 @@ def save_config():
         target_col='condition',
         categorical_cols=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'],
         numerical_cols=['age', 'trestbps', 'chol', 'thalach', 'oldpeak'],
-        cols_to_imput=[],
+        cols_to_imput={'num': [], 'cat': []},
         cols_to_ohe=[],
-        cols_to_scale=[]
+        scale_params=(['oldpeak', 'trestbps'], [0.4, 10]),
+        cols_to_std_scale=['age'],
+        cat_impute_strat='most_frequent',
+        num_impute_strat='constant'
     ))
 
-    savepath = os.path.join("../configs", 'cle_hea_diss.json')
+    savepath = os.path.join("D:\study\MADE\MADE22\mlops\ml_project\configs", 'cle_hea_diss.json')
 
     with open(savepath, 'w') as fileobj:
         json.dump(config, fileobj, indent=4)
@@ -118,7 +124,7 @@ def save_config():
         params_grid=None
     ))
 
-    savepath = os.path.join("../configs", 'cle_hea_diss_simple.json')
+    savepath = os.path.join("D:\study\MADE\MADE22\mlops\ml_project\configs", 'cle_hea_diss_simple.json')
 
     with open(savepath, 'w') as fileobj:
         json.dump(config, fileobj, indent=4)
@@ -195,4 +201,4 @@ def tune_logging(debug, stream):
 if __name__ == '__main__':
     tune_logging(debug=True, stream=True)
     save_config()
-    read_config("../configs/cle_hea_diss.json")
+    read_config("D:\study\MADE\MADE22\mlops\ml_project\configs/cle_hea_diss.json")

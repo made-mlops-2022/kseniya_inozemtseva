@@ -32,7 +32,7 @@ def download_dataset(
 
 def read_dataset(dataset_path='') -> pd.DataFrame:
     if dataset_path:
-        return pd.read_csv(os.path.abspath(dataset_path))
+        return pd.read_csv(dataset_path)
 
 
 def split_train_val_data(data : pd.DataFrame, feature_params) -> Any:

@@ -26,15 +26,13 @@ def train(config_path: str):
     logger.info(f'Data  {data.shape=}')
 
     logger.info(f'Feature building, options {feature_params}')
-    processor = features_utils.get_processor(feature_params)
+    preprocessor = features_utils.get_preprocessor(feature_params)
     logger.info('First step of the pipeline constructed')
-    logger.debug(f'{processor=}')
 
     logger.info(f'Constructing model, options {model_params}')
-    model = models_utils.get_model(processor,
+    model = models_utils.get_model(preprocessor,
                                    model_params=model_params)
     logger.info('Model constructed')
-    logger.debug(f'{model=}')
 
     logger.info(f'Splitting datset, test size {feature_params.test_size}')
     X_train, X_val, y_train, y_val = data_utils.split_train_val_data(
@@ -52,6 +50,7 @@ def train(config_path: str):
     logger.info('Saving state')
 
     models_utils.save_state(model, project_structure, model_params, feature_params)
+
 
 # TODO: option logger_path
 @click.command(name="train_pipeline")
