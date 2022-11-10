@@ -8,7 +8,7 @@ import io
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from ml_example.params.params_utils import ProjectStructure
+from ml_project.params.params_utils import ProjectStructure
 
 
 def read_dataset(dataset_path='') -> pd.DataFrame:

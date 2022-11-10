@@ -4,11 +4,11 @@ import logging
 
 import pandas as pd
 
-import ml_example.data as data_utils
-import ml_example.features as features_utils
-import ml_example.models as models_utils
-import ml_example.params as params
-from ml_example.tests import synthetic_data
+import ml_project.data as data_utils
+import ml_project.features as features_utils
+import ml_project.models as models_utils
+import ml_project.params as params
+from ml_project.tests import synthetic_data
 
 
 def train(config_path: str):

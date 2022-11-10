@@ -5,20 +5,20 @@ import unittest
 from unittest import mock
 from io import StringIO
 
-from ml_example.tests.synthetic_data import create_data_like
-from ml_example.main import train, load_predict
-from ml_example.params import tune_logging, get_project_root
+from ml_project.tests.synthetic_data import create_data_like
+from ml_project.main import train, load_predict
+from ml_project.params import tune_logging, get_project_root
 
 
 class TestTrain(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         tune_logging(debug=False, stream=True)
-        os.chdir(get_project_root())
+        os.chdir(get_project_root().parent)
 
     def testTrain(self):
 
-        for config_path in glob.glob('..\configs\*simple.json', recursive=False):
+        for config_path in glob.glob('.\configs\*simple.json', recursive=False):
 
             with unittest.mock.patch('builtins.print') as m_output:
                 train(config_path)
@@ -38,8 +38,8 @@ class TestTrainPredict(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        os.chdir("..\\")
-        synt_dataset = create_data_like(r"..\data\raw\heart_cleveland_upload.csv", 'condition', cls.test_len)
+        os.chdir(get_project_root().parent)
+        synt_dataset = create_data_like(r".\data\raw\heart_cleveland_upload.csv", 'condition', cls.test_len)
 
         file, dataset_path = tempfile.mkstemp()
         synt_dataset.drop(columns=['condition']).to_csv(dataset_path, index=False)
@@ -49,7 +49,7 @@ class TestTrainPredict(unittest.TestCase):
 
     def testPredict(self):
         dataset_file = self.__class__.dataset_path
-        model_file = glob.glob('..\models\*', recursive=False)[0]
+        model_file = glob.glob('.\models\*', recursive=False)[0]
         file, file_path = tempfile.mkstemp()
         try:
             load_predict([dataset_file,
