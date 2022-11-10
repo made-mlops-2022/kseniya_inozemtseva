@@ -38,7 +38,7 @@ jobs:
           python -m pip install flake8 pytest
           if [ -f ./ml_project/requirements.txt ]; then pip install -r ./ml_project/requirements.txt; echo okok; fi
           cd ./ml_project
-          echo ----------------------------------------------------------------------------
+          echo *********************************-------------------------------------------
           python -m pip install -e .
       - name: Lint with flake8
         run: |
