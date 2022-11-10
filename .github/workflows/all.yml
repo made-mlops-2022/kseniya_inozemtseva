@@ -37,9 +37,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install flake8 pytest
           if [ -f ./ml_project/requirements.txt ]; then pip install -r ./ml_project/requirements.txt; echo okok; fi
-          cd ./ml_project/ml_project
           echo *********************************-------------------------------------------
-          python -m pip install -e .
+          python -m pip install -e ./ml_project/.
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
