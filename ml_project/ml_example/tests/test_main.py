@@ -7,21 +7,18 @@ from io import StringIO
 
 from ml_example.tests.synthetic_data import create_data_like
 from ml_example.main import train, load_predict
-from ml_example.params import tune_logging
+from ml_example.params import tune_logging, get_project_root
 
 
 class TestTrain(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         tune_logging(debug=False, stream=True)
-        print(__file__)
-        # TODO: dont do this
-        os.chdir("..\\")
+        os.chdir(get_project_root())
 
     def testTrain(self):
 
         for config_path in glob.glob('..\configs\*simple.json', recursive=False):
-            #config_path = r"configs\cle_hea_diss_simple.json"
 
             with unittest.mock.patch('builtins.print') as m_output:
                 train(config_path)
@@ -36,29 +33,44 @@ class TestTrainPredict(unittest.TestCase):
     synt_dataset = None
     target_col = None
     dataset_path = None
+    file = None
+    test_len = 100
 
     @classmethod
     def setUpClass(cls):
         os.chdir("..\\")
-        synt_dataset = create_data_like(r"..\data\raw\heart_cleveland_upload.csv", 'condition', 100)
-        #filelike = StringIO()
-        #synt_dataset.to_csv(filelike, line_terminator=r'\r\n')
-        #filelike.seek(0)
-        #cls.dataset_file = filelike
+        synt_dataset = create_data_like(r"..\data\raw\heart_cleveland_upload.csv", 'condition', cls.test_len)
+
         file, dataset_path = tempfile.mkstemp()
-        synt_dataset.to_csv(dataset_path)
+        synt_dataset.drop(columns=['condition']).to_csv(dataset_path, index=False)
+        cls.file = file
         cls.dataset_path = dataset_path
         tune_logging(debug=False, stream=True)
 
     def testPredict(self):
         dataset_file = self.__class__.dataset_path
         model_file = glob.glob('..\models\*', recursive=False)[0]
-        load_predict(["data_path" ,dataset_file,
-                     "model_path", model_file,
-                      "--output_path", "output.txt",
-                      "--stream"])
-        self.assertTrue(True)
+        file, file_path = tempfile.mkstemp()
+        try:
+            load_predict([dataset_file,
+                         model_file,
+                          "--output_path", file_path,
+                          "--stream"])
+        except SystemExit as e:
+            if not e.code:
+                pass
+            else:
+                raise SystemExit(e)
+        self.assertTrue(os.path.exists(file_path))
+        os.close(file)
+        with open(file_path, 'r') as file:
+            res = list(map(lambda x: int(x.strip()), file.readlines()))
+            self.assertLessEqual(sum(res), self.__class__.test_len / 1.5)
+            self.assertLessEqual(self.__class__.test_len / 10, sum(res))
+
+        os.remove(file_path)
 
     @classmethod
     def tearDown(cls) -> None:
+        os.close(cls.file)
         os.remove(cls.dataset_path)

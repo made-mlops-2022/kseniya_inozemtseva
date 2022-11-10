@@ -8,6 +8,7 @@ import ml_example.data as data_utils
 import ml_example.features as features_utils
 import ml_example.models as models_utils
 import ml_example.params as params
+from ml_example.tests import synthetic_data
 
 
 def train(config_path: str):
@@ -112,10 +113,13 @@ def load_predict(data_path, model_path, output_path, stream=True, debug=True):
 
 
 if __name__ == '__main__':
-    config_path = "./configs/cle_hea_diss_simple.json"
+    os.chdir(params.get_project_root())
+    config_path = "../configs/cle_hea_diss_simple.json"
     data_path = "../test.csv"
-    model_path = "./models/RandomForest.pkl"
-    os.chdir('..')
+    test_data = synthetic_data.create_data_like("../data/raw/heart_cleveland_upload.csv", 'condition', 100)
+    test_data.drop(columns=['condition']).to_csv(data_path, index=False)
+    model_path = "../models/RandomForest.pkl"
+
     params.tune_logging(debug=True, stream=True)
 
     logger = logging.getLogger(__name__)
@@ -126,10 +130,10 @@ if __name__ == '__main__':
         project_structure = config["ProjectStructure"]
         feature_params = config["FeatureParams"]
         model_params = config["ModelParams"]
-        model, _, _, _ = models_utils.restore_state(model_path, restore_config=False)
+        model = models_utils.restore_model(model_path)
     else:
         model, project_structure, \
-        model_params, feat_params = models_utils.restore_state(model_path)
+        model_params, feat_params = models_utils.models_utils.restore_state(model_path)
 
     data = data_utils.read_dataset(data_path)
     logger.info(f'Data read from {data_path=}')

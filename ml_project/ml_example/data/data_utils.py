@@ -1,33 +1,14 @@
+from pathlib import Path
 from typing import List, Any
 import os
 import urllib.request
 import zipfile
+import io
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
 
 from ml_example.params.params_utils import ProjectStructure
-
-
-def download_dataset(
-        dataset_url,
-        data_dir=''
-) -> None:
-
-    if not data_dir:
-        data_dir = ProjectStructure.data_raw_path
-
-    archive_file = os.path.join(data_dir, "dataset_archive.zip")
-    if not os.path.exists(archive_file):
-        urllib.request.urlretrieve(dataset_url, archive_file)
-
-    with zipfile.ZipFile(os.path.normpath(archive_file), 'r') as zip_ref:
-        dataset_filename = zip_ref.namelist()[0]
-        zip_ref.extractall(data_dir)
-
-        dataset_path = os.path.join(data_dir, dataset_filename)
-
-    return dataset_path
 
 
 def read_dataset(dataset_path='') -> pd.DataFrame:
@@ -44,4 +25,11 @@ def split_train_val_data(data : pd.DataFrame, feature_params) -> Any:
 
 
 if __name__ == '__main__':
-    download_dataset("https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci/download?datasetVersionNumber=1")
+
+    os.chdir(Path(__file__).parent.parent)
+    project_structure = ProjectStructure()
+    Path(project_structure.dataset_path).parent.mkdir(parents=True, exist_ok=True)
+    # prepare_dataset(
+    #     "https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci/download?datasetVersionNumber=1",
+    #     project_structure.dataset_path
+    # )

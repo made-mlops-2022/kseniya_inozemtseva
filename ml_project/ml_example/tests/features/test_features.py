@@ -1,10 +1,8 @@
 import unittest
 
-from ml_example.data import *
 from ml_example.params import *
 from ml_example.features import *
 from ml_example.features.features_utils import CustomTransformerCLevHeartDisease
-from sklearn.ensemble import RandomForestClassifier
 from ml_example.tests.synthetic_data import create_data_like
 
 
