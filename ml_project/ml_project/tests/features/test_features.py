@@ -15,7 +15,7 @@ class TestFeatures(unittest.TestCase):
     def setUpClass(cls):
         os.chdir(get_project_root().parent)
         cls.feature_params = FeatureParams()  # default values ok
-        cls.dataset = create_data_like(r".\data\raw\heart_cleveland_upload.csv",
+        cls.dataset = create_data_like(r".\data\raw\heart_cleveland_upload.zip",
                                        cls.feature_params.target_col,
                                        100)
 
