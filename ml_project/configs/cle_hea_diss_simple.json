@@ -16,10 +16,10 @@
         "random_state": 42
     },
     "ProjectStructure": {
-        "dataset_path": "../data/raw/heart_cleveland_upload.csv",
-        "data_raw_path": "../data/raw",
-        "data_proc_path": "../data/processed",
-        "models_path": "../models"
+        "dataset_path": "./data/raw/heart_cleveland_upload.csv",
+        "data_raw_path": "./data/raw",
+        "data_proc_path": "./data/processed",
+        "models_path": "./models"
     },
     "FeatureParams": {
         "test_size": 0.2,

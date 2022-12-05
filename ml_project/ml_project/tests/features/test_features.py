@@ -1,11 +1,10 @@
+import os
 import unittest
 
-from ml_example.data import *
-from ml_example.params import *
-from ml_example.features import *
-from ml_example.features.features_utils import CustomTransformerCLevHeartDisease
-from sklearn.ensemble import RandomForestClassifier
-from ml_example.tests.synthetic_data import create_data_like
+from ml_project.params import *
+from ml_project.features import *
+from ml_project.features.features_utils import CustomTransformerCLevHeartDisease
+from ml_project.tests.synthetic_data import create_data_like
 
 
 class TestFeatures(unittest.TestCase):
@@ -14,8 +13,9 @@ class TestFeatures(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        os.chdir(get_project_root().parent)
         cls.feature_params = FeatureParams()  # default values ok
-        cls.dataset = create_data_like(r"..\..\..\data\raw\heart_cleveland_upload.csv",
+        cls.dataset = create_data_like(r".\data\raw\heart_cleveland_upload.zip",
                                        cls.feature_params.target_col,
                                        100)
 

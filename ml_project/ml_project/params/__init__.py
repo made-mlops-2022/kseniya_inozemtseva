@@ -3,7 +3,8 @@ from .params_utils import (
     ModelParams,
     ProjectStructure,
     read_config,
-    tune_logging
+    tune_logging,
+    get_project_root
 )
 
 __all__ = [
@@ -11,5 +12,6 @@ __all__ = [
     "ModelParams",
     "ProjectStructure",
     "read_config",
-    "tune_logging"
+    "tune_logging",
+    "get_project_root"
 ]

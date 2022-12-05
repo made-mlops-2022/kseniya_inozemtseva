@@ -4,6 +4,11 @@ from dataclasses import dataclass, field, asdict, make_dataclass
 import json
 import logging
 import logging.config
+from pathlib import Path
+
+
+def get_project_root() -> Path:
+    return Path(__file__).parent.parent
 
 
 @dataclass()
@@ -53,11 +58,11 @@ class RandomForestParamsGrid:
 
 @dataclass()
 class ProjectStructure:
-    dataset_path: str = "../data/raw/heart_cleveland_upload.csv"
-    data_raw_path: str = "../data/raw"
-    data_proc_path: str = "../data/processed"
+    dataset_path: str = "./data/raw/heart_cleveland_upload.csv"
+    data_raw_path: str = "./data/raw"
+    data_proc_path: str = "./data/processed"
 
-    models_path: str = "../models"
+    models_path: str = "./models"
 
 
 @dataclass()
@@ -92,10 +97,10 @@ def save_config():
     ))
 
     config[ProjectStructure.__name__] = asdict(ProjectStructure(
-        dataset_path="../data/raw/heart_cleveland_upload.csv",
-        data_raw_path="../data/raw",
-        data_proc_path="../data/processed",
-        models_path="../models"
+        dataset_path="./data/raw/heart_cleveland_upload.csv",
+        data_raw_path="./data/raw",
+        data_proc_path="./data/processed",
+        models_path="./models"
     ))
 
     config[FeatureParams.__name__] = asdict(FeatureParams(
@@ -111,7 +116,7 @@ def save_config():
         num_impute_strat='constant'
     ))
 
-    savepath = os.path.join("D:\study\MADE\MADE22\mlops\ml_project\configs", 'cle_hea_diss.json')
+    savepath = os.path.join("..\configs", 'cle_hea_diss.json')
 
     with open(savepath, 'w') as fileobj:
         json.dump(config, fileobj, indent=4)
@@ -124,7 +129,7 @@ def save_config():
         params_grid=None
     ))
 
-    savepath = os.path.join("D:\study\MADE\MADE22\mlops\ml_project\configs", 'cle_hea_diss_simple.json')
+    savepath = os.path.join("..\configs", 'cle_hea_diss_simple.json')
 
     with open(savepath, 'w') as fileobj:
         json.dump(config, fileobj, indent=4)
@@ -200,5 +205,7 @@ def tune_logging(debug, stream):
 
 if __name__ == '__main__':
     tune_logging(debug=True, stream=True)
+    os.chdir(get_project_root())
     save_config()
-    read_config("D:\study\MADE\MADE22\mlops\ml_project\configs/cle_hea_diss.json")
+
+    read_config("../configs/cle_hea_diss.json")
